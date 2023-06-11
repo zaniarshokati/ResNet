@@ -23,8 +23,12 @@ class DataLoader():
         df = df.sort_values(by=['filename'])
         data = df.iloc[:,1:]
         data.insert(0, "data", self.images, True)
-        self.train = data.iloc[500:, :].reset_index()
-        self.test = data.iloc[:500, :].reset_index()
+        
+        # shuffle the DataFrame rows
+        data = data.sample(frac = 1)
+
+        self.train = data.iloc[500:, :]
+        self.test = data.iloc[:500, :]
         return  self.train, self.test
     
 
